@@ -1,7 +1,7 @@
 import { createContext} from "react"
 import io from "socket.io-client"
 
-const socketConn=io(`${window.location.origin}`)
+const socketConn=io(import.meta.env.VITE_SERVER_ENDPOINT)
 const SocketContext=createContext({})
 
 console.log(socketConn)
