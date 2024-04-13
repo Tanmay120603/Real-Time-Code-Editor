@@ -11,11 +11,7 @@
     ],
     "routes": [
       {
-        "src": "/code/compile",
-        "dest": "index.js"
-      },
-      {
-        "src": "/code/result",
+        "src": "/code/(.*)",
         "dest": "index.js"
       },
       {
@@ -23,7 +19,7 @@
         "dest": "dist/index.html"
       },
       {
-        "src": "/.*",
+        "src": "/(.*)",
         "dest": "dist/index.html"
       },
       {
