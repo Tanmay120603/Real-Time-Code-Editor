@@ -19,6 +19,10 @@ server.use(express.json())
 server.use("/code",codeRouter)
 
 
+server.get("/",(req,res)=>{
+    res.send("<h1>Hello</h1>")
+})
+
 io.on("connection",(socket)=>{
     socket.on("join-room",({roomId,username,socketId})=>{
         if(!(checkRoomExist(roomId)))addRoomData(roomId)
