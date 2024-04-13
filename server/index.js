@@ -17,6 +17,7 @@ const io=new Server(httpServer,{
 
 server.use(cors())
 server.use(express.json())
+server.use(express.static(path.resolve(__dirname,process.env.STATIC_ROOT_DIR)))
 server.use("/code",codeRouter)
 server.use("*",(req,res)=>{
     res.sendFile(path.resolve(__dirname,"dist","index.html"))

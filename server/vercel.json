@@ -1,0 +1,34 @@
+{
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "dist/**",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/code/compile",
+        "dest": "index.js"
+      },
+      {
+        "src": "/code/result",
+        "dest": "index.js"
+      },
+      {
+        "src": "/",
+        "dest": "dist/index.html"
+      },
+      {
+        "src": "/.*",
+        "dest": "dist/index.html"
+      },
+      {
+        "src": "/(.+)",
+        "dest": "dist/$1"
+      }
+    ]
+  }

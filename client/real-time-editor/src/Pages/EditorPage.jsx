@@ -56,9 +56,9 @@ function EditorPage(){
     async function handleRunCode(){
         setResultLoading("Compiling the code")
         try{
-            const responseSubmit=await axios.request({method:"POST",url:import.meta.env.VITE_SERVER_ENDPOINT+"code/compile",data:{code:btoa(editorValue)}})
+            const responseSubmit=await axios.request({method:"POST",url:"/code/compile",data:{code:btoa(editorValue)}})
             setResultLoading("Code has been compiled wait few seconds to see result")
-            const responseResult=await axios.request({method:"POST",url:import.meta.env.VITE_SERVER_ENDPOINT+"code/result",data:{token:responseSubmit.data.token}})
+            const responseResult=await axios.request({method:"POST",url:"/code/result",data:{token:responseSubmit.data.token}})
             setResult(responseResult.data.stdout || responseResult.data.stderr)
         }
         catch(err){
