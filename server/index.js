@@ -2,7 +2,6 @@ const express=require("express")
 require("dotenv").config()
 const cors=require("cors")
 const {Server}=require("socket.io")
-const path=require("path")
 const http=require("http")
 const codeRouter=require("./routes/code.js")["router"]
 const { checkRoomExist,addRoomData,deleteRoomData,getRoomData,updateRoomEditorText,addUser,deleteUser} = require("./controller/room.js")
@@ -16,12 +15,8 @@ const io=new Server(httpServer,{
 })
 
 server.use(cors())
-server.use(express.static(process.env.STATIC_ROOT_DIR))
 server.use(express.json())
 server.use("/code",codeRouter)
-server.use("*",(req,res)=>{
-    res.sendFile(path.resolve(__dirname,process.env.STATIC_ROOT_DIR,"index.html"))    
-})
 
 io.on("connection",(socket)=>{
     socket.on("join-room",({roomId,username,socketId})=>{
