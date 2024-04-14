@@ -105,7 +105,7 @@ function EditorPage(){
    </div>
    </div>
 </aside>
-<div className="md:hidden bg-black-light flex flex-row justify-center py-2 gap-2">
+<div className={`md:hidden bg-black-light ${openSideBar ? "hidden" : "flex"} flex-row justify-center py-2 gap-2`}>
     <button className={`border-2 border-orange-500 ${isCodePage ? "bg-white text-orange-500" : "text-white"} rounded py-1 px-4`} onClick={(e)=>setIsCodePage(true)}>Code</button>
     <button className={`border-2 border-orange-500 ${!isCodePage ? "bg-white text-orange-500" : "text-white"} rounded py-1 px-4`} onClick={(e)=>setIsCodePage(false)}>Run</button>
 </div>
