@@ -18,6 +18,7 @@ function EditorPage(){
     const [editorValue,setEditorValue]=useState("")
     const socket=useContext(SocketContext)
     const [openSideBar,setOpenSideBar]=useState(false)
+    const [isCodePage,setIsCodePage]=useState(true)
 
     useEffect(()=>{
 
@@ -62,7 +63,7 @@ function EditorPage(){
             setResult(responseResult.data.stdout || responseResult.data.stderr)
         }
         catch(err){
-            console.log(err)
+            toast.error("Something went wrong")
         }
         finally{
             setResultLoading(false)
@@ -79,10 +80,10 @@ function EditorPage(){
      socket.emit("leave-room",{username:location.state,roomId:params.roomID,socketId:socket.id})
      navigate("/")   
     }
-
+    
     return(
     <div className="h-[100vh]">
-    <AiOutlineMenuUnfold color="black" size={24} className={`lg:hidden ${openSideBar && "hidden"} bg-white rounded absolute left-1 top-1 z-50 hover:cursor-pointer`} onClick={()=>setOpenSideBar(true)}/>
+    <AiOutlineMenuUnfold color="black" size={24} className={`lg:hidden ${openSideBar && "hidden"} bg-white rounded absolute sm:left-1.5 sm:top-1.5 left-3 top-3 z-50 hover:cursor-pointer`} onClick={()=>setOpenSideBar(true)}/>
     <aside id="default-sidebar" className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${openSideBar ? "translate-x-0":"-translate-x-full"} lg:translate-x-0`} aria-label="Sidebar">
    <div className="h-full px-3 flex flex-col py-4 overflow-y-auto justify-between bg-black-extra-light dark:bg-gray-800">
     <div>
@@ -104,12 +105,15 @@ function EditorPage(){
    </div>
    </div>
 </aside>
-
+<div className="md:hidden bg-black-light flex flex-row justify-center py-2 gap-2">
+    <button className={`border-2 border-orange-500 ${isCodePage ? "bg-white text-orange-500" : "text-white"} rounded py-1 px-4`} onClick={(e)=>setIsCodePage(true)}>Code</button>
+    <button className={`border-2 border-orange-500 ${!isCodePage ? "bg-white text-orange-500" : "text-white"} rounded py-1 px-4`} onClick={(e)=>setIsCodePage(false)}>Run</button>
+</div>
 <div className="h-full flex lg:ml-64">
-   <div className="lg:p-4 px-2 py-8 sm:px-4 h-full bg-black-light lg:w-8/12 w-6/12 dark:border-gray-700">
+   <div className={`lg:p-4 md:px-4 md:py-8 md:block h-full bg-black-light lg:w-8/12 md:w-6/12 w-full ${isCodePage ? "block" :"hidden"} dark:border-gray-700`}>
     <CodeEditor editorValue={editorValue} setEditorValue={setEditorValue}/>
    </div>
-   <div className="bg-black-extra-light flex flex-col justify-start py-4 px-2 gap-4 items-center h-full lg:w-4/12 w-6/12">
+   <div className={`bg-black-extra-light md:flex ${!isCodePage ? "flex" : "hidden"} flex-col justify-start py-4 px-2 gap-4 items-center h-full lg:w-4/12 md:w-6/12 w-full`}>
    <div className="mb-2"><button className="px-5 py-3 rounded-xl text-sm font-medium text-white bg-orange-600 hover:bg-orange-800 active:bg-grey-900 focus:outline-none border-4 border-white focus:border-purple-200 transition-all" onClick={handleRunCode}><i className="mdi mdi-circle-outline mr-2 text-xl align-middle leading-none"></i>Run Code</button></div>
     <div className="w-full text-white md:p-4 p-2 bg-black h-3/4">
     <h2 className="font-poppins md:text-2xl text-xl mb-1">Output:</h2>
